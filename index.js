@@ -1,15 +1,16 @@
 // Find if all characters in a string is unique
+const mySet = new Set('#$23452^&*');
+console.log(mySet);
 const appDiv = document.getElementById('app');
-appDiv.innerText = `${isUniqueEvenMoreOptimized(
-  'abcdef'
-)} , ${isUniqueEvenMoreOptimized('89%def4#6721')}, ${isUniqueEvenMoreOptimized(
-  'abcABC'
-)}, ${isUniqueEvenMoreOptimized('abcade')}`;
+appDiv.innerText = `${isUniqueSet('abcdef')} , ${isUniqueSet(
+  '89%def4#6721'
+)}, ${isUniqueSet('abcABC')}, ${isUniqueSet('abcade')}
+My Set [${[...mySet]}]`;
 console.log(
-  isUniqueEvenMoreOptimized('abcdef'),
-  isUniqueEvenMoreOptimized('89%def$#6721'),
-  isUniqueEvenMoreOptimized('abcABC'),
-  isUniqueEvenMoreOptimized('abcade')
+  isUniqueEvenMoreOptimizedUsingSet('abcdef'),
+  isUniqueEvenMoreOptimizedUsingSet('89%def$#6721'),
+  isUniqueEvenMoreOptimizedUsingSet('abcABC'),
+  isUniqueEvenMoreOptimizedUsingSet('abcade')
 );
 
 //Complexity time O(n2), space O(1)
@@ -38,17 +39,42 @@ function isUniqueOptimized(str) {
   return true;
 }
 
-//Complexity time
+//Complexity time O(n), space O(n)
 function isUniqueEvenMoreOptimized(str) {
-  const searchedMap = {};
+  const searchedMap = {}; //O(n) -> space
   for (let i = 0; i < str.length; i++) {
+    //O(n)
     const thisChar = str[i];
 
     if (searchedMap[thisChar] === true) {
+      //O(1)
       return false;
     }
 
     searchedMap[thisChar] = true;
   }
   return true;
+}
+
+//Complexity time O(n), space O(n)
+function isUniqueEvenMoreOptimizedUsingSet(str) {
+  const searchedMap = new Set();
+  for (let i = 0; i < str.length; i++) {
+    //O(n)
+    const thisChar = str[i];
+
+    if (searchedMap.has(thisChar)) {
+      //O(1)
+      return false;
+    }
+
+    searchedMap.add(thisChar);
+  }
+  return true;
+}
+
+function isUniqueSet(str) {
+  const newSet = new Set(str);
+
+  return newSet.size === str.length;
 }
