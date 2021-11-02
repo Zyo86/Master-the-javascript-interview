@@ -97,15 +97,16 @@ console.log(y);
 
 // Here, because strict mode is used, y is not created in global space/local space as it is not declared
 // hence we get reference error at line no 101 saying y can not be referenced as memory is not allocated for it
-function fooStrict() {
-  'use strict';
-  let a = (b = 0);
-  a++;
-  b++;
-  return a;
-}
+// function fooStrict() {
+//   'use strict';
+//   let a = (b = 0);
+//   a++;
+//   b++;
+//   return a;
+// }
 
-console.log(fooStrict(), typeof a, typeof b);
-console.log(b);
+// console.log(fooStrict(), typeof a, typeof b);
+// console.log(b);
 
+// This statement prints 100, as assignment operation returns the value assigned
 console.log((myVar = 100));
