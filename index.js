@@ -110,3 +110,54 @@ console.log(y);
 
 // This statement prints 100, as assignment operation returns the value assigned
 console.log((myVar = 100));
+
+//Multi level array flatten question
+const arr = [4, 5, 6, [2, 3], 7, 8, [[9, 10], 11]];
+const aRR = [[[[[[[[[[[[[[[[[[[[20]]]]]]]]]]]]]]]]]]]];
+
+//flatten(arr,1) -> [4,5,6,2,3,7,8,[9,10],11]
+//flatten(arr,2) -> [4,5,6,2,3,7,8,9,10,11]
+
+function flatten(arr, n) {
+  const flattenedArray = [];
+  if (n < 1) return [...arr];
+
+  for (let i = 0; i < arr.length; i++) {
+    const thisItem = arr[i];
+    if (Array.isArray(thisItem)) {
+      // Again flatten keeping the level in mind
+      const newArray = flatten(thisItem, n - 1);
+      for (let j = 0; j < newArray.length; j++) {
+        flattenedArray.push(newArray[j]);
+      }
+    } else {
+      flattenedArray.push(thisItem);
+    }
+  }
+
+  return flattenedArray;
+}
+
+console.log(flatten(arr, 1));
+console.log(flatten(arr, 2));
+console.log(flatten(arr, 3));
+
+console.log(flatten(aRR, 1));
+console.log(flatten(aRR, 2));
+console.log(flatten(aRR, 3));
+
+console.log(flatten(aRR, 4));
+console.log(flatten(aRR, 5));
+console.log(flatten(aRR, 6));
+
+console.log(flatten(aRR, 7));
+console.log(flatten(aRR, 8));
+console.log(flatten(aRR, 9));
+
+console.log(flatten(aRR, 17));
+console.log(flatten(aRR, 18));
+console.log(flatten(aRR, 19));
+
+console.log(flatten(aRR, 20));
+console.log(flatten(aRR, 21));
+console.log(flatten(aRR, 22));
