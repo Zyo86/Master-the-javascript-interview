@@ -79,6 +79,12 @@ function isUniqueSet(str) {
   return newSet.size === str.length;
 }
 
+// Here, because strict mode is not used, y is created in global space and value is 0 for y.
+// y = 0 acts as (y = 0)  and returns value of y, i.e. 0
+// hence x is also 0
+// but x is defined as let, so it is only locally scoped and can not be accessed from outside
+// but y is global scoped and can be accessed from outside
+// hence, typeof x -> undefined, typeof y -> number
 function foo() {
   let x = (y = 0);
   x++;
@@ -87,3 +93,19 @@ function foo() {
 }
 
 console.log(foo(), typeof x, typeof y);
+console.log(y);
+
+// Here, because strict mode is used, y is not created in global space/local space as it is not declared
+// hence we get reference error at line no 101 saying y can not be referenced as memory is not allocated for it
+function fooStrict() {
+  'use strict';
+  let a = (b = 0);
+  a++;
+  b++;
+  return a;
+}
+
+console.log(fooStrict(), typeof a, typeof b);
+console.log(b);
+
+console.log((myVar = 100));
