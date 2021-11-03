@@ -271,3 +271,27 @@ function isSingleMutation(str1, str2) {
 console.log(isSingleMutation('abc', 'abdc'), ' : single mutation');
 console.log(isSingleMutation('abcd', 'abd'), ' : single mutation');
 console.log(isSingleMutation('abcd', 'abcX'), ' : single mutation');
+
+// Find if strings in an array are all anagrams
+
+function allAnagrams(strings) {
+  // n-> length of array s-> length of strings
+  const sorted = strings.map((str) => str.split('').sort().join(''));
+  // map runs n times
+  // for each map iteration, split -> O(s), sort -> O(s*log(s)), join -> O(s)
+  // Comes down to O(n * (2s + s*log(s)))
+  // Comes down to O(n * s * log(s))
+  for (let i = 1; i < sorted.length; i++) {
+    //O(s)
+    if (sorted[i] !== sorted[0]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Time O(n * s * log(s))
+// Space O(n*s)
+console.log(allAnagrams(['abcd', 'abdc', 'adbc']), ': All Anagrams');
+
+function allAnagramsFast(strings) {}
