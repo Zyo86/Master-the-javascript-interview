@@ -1,3 +1,5 @@
+import { f } from './AMAZON.js';
+
 // Find if all characters in a string is unique
 const mySet = new Set('#$23452^&*');
 console.log(mySet);
@@ -85,15 +87,15 @@ function isUniqueSet(str) {
 // but x is defined as let, so it is only locally scoped and can not be accessed from outside
 // but y is global scoped and can be accessed from outside
 // hence, typeof x -> undefined, typeof y -> number
-function foo() {
-  let x = (y = 0);
-  x++;
-  y++;
-  return x;
-}
+// function foo() {
+//   let x = (y = 0);
+//   x++;
+//   y++;
+//   return x;
+// }
 
-console.log(foo(), typeof x, typeof y);
-console.log(y);
+// console.log(foo(), typeof x, typeof y);
+// console.log(y);
 
 // Here, because strict mode is used, y is not created in global space/local space as it is not declared
 // hence we get reference error at line no 101 saying y can not be referenced as memory is not allocated for it
@@ -109,7 +111,7 @@ console.log(y);
 // console.log(b);
 
 // This statement prints 100, as assignment operation returns the value assigned
-console.log((myVar = 100));
+// console.log((myVar = 100));
 
 //Multi level array flatten question
 const arr = [4, 5, 6, [2, 3], 7, 8, [[9, 10], 11]];
@@ -295,3 +297,77 @@ function allAnagrams(strings) {
 console.log(allAnagrams(['abcd', 'abdc', 'adbc']), ': All Anagrams');
 
 function allAnagramsFast(strings) {}
+
+// Deep Equivalence Algorithms
+// Deep equality operators are not gonna help
+// NaN is of type number
+// NaN === NaN returns false
+// null is an object in javascript because of a bug itself
+function deepEquals(a, b) {
+  if (Number.isNaN(a) && Number.isNaN(b)) {
+    return true;
+  }
+  if (typeof a !== typeof b) {
+    return false;
+  }
+  if (typeof a !== 'object' || a === null || b === null) {
+    return a === b;
+  }
+  if (Object.keys(a).length !== Object.keys(b).length) {
+    return false;
+  }
+
+  for (const key in a) {
+    if (!deepEquals(a[key], b[key])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+console.log(deepEquals(1, 1));
+console.log(deepEquals(null, 1));
+console.log(deepEquals(1, NaN));
+console.log(deepEquals({}, {}));
+console.log(deepEquals('{}', 1));
+
+// Memoized fibonacci using closure
+
+const fibonacci = (function () {
+  const seq = [1, 1];
+  return function (n) {
+    if (seq.length > n) {
+      return seq.slice(0, n);
+    }
+
+    while (seq.length < n) {
+      const lastItem = seq[seq.length - 1];
+      const secondLastItem = seq[seq.length - 2];
+      seq.push(lastItem + secondLastItem);
+    }
+
+    return seq;
+  };
+})();
+
+console.log(fibonacci(2));
+console.log(fibonacci(20));
+console.log(fibonacci(0));
+console.log(fibonacci(1));
+console.log(fibonacci(10));
+
+console.log(f(1));
+console.log(f(10));
+console.log(f(11));
+console.log(f(99));
+console.log(f(111));
+console.log(f(121));
+console.log(f(999));
+console.log(f(990));
+
+console.log(f(123456));
+console.log(f(123456789));
+console.log(f(123456345));
+console.log(f(123456890));
+console.log(f(55555555555555555));
