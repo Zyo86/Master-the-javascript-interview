@@ -236,3 +236,38 @@ console.log(isSubset([1, 2, 3], [1, 2, 3, 4]), ' :isSubset');
 console.log(isSubset([1, 2, 2, 2, 3], [1, 2, 2]), ' :isSubset');
 console.log(isSubset([1, 3], [1, 2]), ' :isSubset');
 console.log(isSubset([1, 2, 3], [1, 1, 1]), ' :isSubset');
+
+//Find if strings are only singly mutated
+
+//Insertion
+// "abc", "abdc"
+//Deletion
+// "abcd", "abd"
+//Substitution
+// "abcd" , "abcX"
+
+function isSingleMutation(str1, str2) {
+  let mutations = 0;
+  for (let i = 0, j = 0; i < str1.length || j < str2.length; i++, j++) {
+    if (str1[i] !== str2[j]) {
+      mutations++;
+      if (mutations > 1) {
+        return false;
+      }
+      if (str1.length < str2.length) {
+        i--;
+      }
+      if (str1.length > str2.length) {
+        j--;
+      }
+    }
+  }
+  return true;
+}
+
+//Time O(n)
+//Space O(1)
+
+console.log(isSingleMutation('abc', 'abdc'), ' : single mutation');
+console.log(isSingleMutation('abcd', 'abd'), ' : single mutation');
+console.log(isSingleMutation('abcd', 'abcX'), ' : single mutation');
