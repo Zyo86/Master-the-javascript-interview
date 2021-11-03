@@ -161,3 +161,78 @@ console.log(flatten(aRR, 19));
 console.log(flatten(aRR, 20));
 console.log(flatten(aRR, 21));
 console.log(flatten(aRR, 22));
+
+// Finding if a string is a rotation of base string
+
+function isRotation(str1, str2) {
+  if (str1.length !== str2.length) {
+    return false;
+  } else if (str1.length === str2.length && (str1 + str1).includes(str2)) {
+    //O(n) to find includes
+    //O(n) space Complexity while adding strings str1 + str1, string concatenation time complexity O(1)
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isRotationNonOptimised(str1, str2) {
+  if (str1.length !== str2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < str1.length; i++) {
+    //O(n) loop rotation as string characters are n numbers
+    const currentRotation = str1.slice(i, str1.length) + str1.slice(0, i); //Slice operation is linear iteration hence O(n)
+    if (currentRotation === str2) return true;
+  }
+
+  //Time complexity comes out as O(n2)
+  //Space complexity comes out as O(n) to store currentRotation
+
+  return false;
+}
+
+console.log(isRotation('Javascript', 'Java'));
+console.log(isRotation('Javascript', 'scriptJava'));
+
+console.log(isRotationNonOptimised('Javascript', 'Java'));
+console.log(isRotationNonOptimised('Javascript', 'scriptJava'));
+
+// Check is an array is a substring of another array
+
+function isSubset(superset, subset) {
+  const map = {};
+  if (subset.length > superset.length) {
+    return false;
+  }
+
+  for (let i = 0; i < superset.length; i++) {
+    const thisItem = superset[i];
+    if (map[thisItem] === undefined) {
+      map[thisItem] = 1;
+    } else {
+      map[thisItem]++;
+    }
+  }
+
+  for (let i = 0; i < subset.length; i++) {
+    const thisItem = subset[i];
+    if (map[thisItem]) {
+      map[thisItem]--;
+      if (map[thisItem] === 0) {
+        delete map[thisItem];
+      }
+    } else if (map[thisItem] === undefined) {
+      return false;
+    }
+  }
+
+  return true;
+}
+//Time O(m + n)
+//Space O(n)
+console.log(isSubset([1, 2, 3], [1, 2, 3, 4]), ' :isSubset');
+console.log(isSubset([1, 2, 2, 2, 3], [1, 2, 2]), ' :isSubset');
+console.log(isSubset([1, 3], [1, 2]), ' :isSubset');
+console.log(isSubset([1, 2, 3], [1, 1, 1]), ' :isSubset');
